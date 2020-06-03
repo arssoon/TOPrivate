@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/out/production/Projekt pip svn" />
+    <output-test url="file://$MODULE_DIR$/out/test/Projekt pip svn" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../Projekt pip svn">
+      <sourceFolder url="file://$MODULE_DIR$/../Projekt pip svn/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="ojdbc8" level="project" />
+  </component>
+</module>
