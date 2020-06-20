@@ -240,7 +240,7 @@ public class DataManager {
 
     public static User getUserByLogin(String login) {
        //addUsersToDatabase();
-        String sql = "select * from uzytkownik where login = '"+login+"'";
+        String sql = "Select * From uzytkownik Where login = '"+login+"'";
         ResultSet rs = DatabaseConnector.getResultSet(sql);
         User user = null;
         try {
@@ -250,8 +250,8 @@ public class DataManager {
                     rs.getString("imie"),
                     rs.getString("nazwisko"),
                     rs.getString("login"),
-                    rs.getString("haslo"),
-                    rs.getInt("ID_STANOWISKA")
+                    rs.getString("haslo")/*,
+                    rs.getInt("ID_STANOWISKA")*/
             );
         } catch (SQLException e) {
             e.printStackTrace();

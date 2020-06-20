@@ -5,7 +5,7 @@ import java.sql.*;
 
 
 public class DatabaseConnector {
-    static  String DB_URL = "jdbc:oracle:thin:@localhost:1521/xe";
+    static  String DB_URL = "jdbc:oracle:thin:@localhost:1521/XEPDB1";
     static Statement stmt = null;
     static java.sql.Connection conn = null;
     static ResultSet rs;

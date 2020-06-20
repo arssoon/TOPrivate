@@ -75,8 +75,8 @@ public class LoginView  extends HBox {
     }
 
     private void login(){
-        User user = (User)ClientManager.clientSender.sendToServer(ServerOperation.getUser,login.getText());
-        //User user  = new User(1,"Krzysztof","Skalik","krzysiu","skalik",1);
+        //User user =  (User)ClientManager.clientSender.sendToServer(ServerOperation.getUser,login.getText());
+        User user  = new User(1,"Krzysztof","Skalik","sexikrzysiu69","qwe");
         System.out.println("Sprawdzam poprawnosc loginu i hasla io wgl jest zajebiscie");
         if(password.getText().equals(user.getHaslo())){
             System.out.println("Zalogowano");

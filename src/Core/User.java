@@ -9,19 +9,19 @@ public class User implements Serializable {
     private String nazwisko;
     private String login;
     private String haslo;
-    private int stanowisko;
+    //private int stanowisko;
     /*
     1 - burmistrz
     2 - radny
     */
 
-    public User(int id, String imie, String nazwisko, String login, String haslo, int stanowisko) {
+    public User(int id, String imie, String nazwisko, String login, String haslo/*, int stanowisko*/) {
         this.id = id;
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.login = login;
         this.haslo = haslo;
-        this.stanowisko = stanowisko;
+        //this.stanowisko = stanowisko;
     }
     public int getId() {
         return id;
@@ -63,12 +63,12 @@ public class User implements Serializable {
         this.haslo = haslo;
     }
 
-    public int getStanowisko() {
+  /*  public int getStanowisko() {
         return stanowisko;
     }
 
     public void setStanowisko(int stanowisko) {
         this.stanowisko = stanowisko;
-    }
+    }*/
 
 }
