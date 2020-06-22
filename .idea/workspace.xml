@@ -1,12 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="e6275d2e-c291-435f-8672-15d194113dff" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Client/Client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Client/ClientSender.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Client/ServerOperation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/ClientManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Events/CityEvent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Events/CityEventType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Events/DzienDziecka.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Glos.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/GlosWydarzenia.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/GlosowanieUstawa.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/GlosowanieWydarzenie.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/GlosyWydarzenia.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/ListaWnioskow.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Stanowisko.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/StatusUstawy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/StatusWniosek.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/UstawaMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Wniosek.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/AddWniosekView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/AddWydarzenieView$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/AddWydarzenieView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/ConnectionView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/CouncilorView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/GuestView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/LoginView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/MayorView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/UIManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/WyswietlNoweWnioskiView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/WyswietlNoweWydarzeniaView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/WyswietlWszystkieWnioskiView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/server.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ConnectedClient$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ConnectedClient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/Database/DataManager$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/Database/DataManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/Database/DatabaseConnector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/MainServer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ServerListner.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ServerOperation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projekt TO.iml" beforeDir="false" afterPath="$PROJECT_DIR$/projekt TO.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Events/CityEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Events/CityEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Graphics/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/LoginView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/src/Database/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/src/Database/DataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/src/Database/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/src/Database/DatabaseConnector.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,14 +82,16 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="oracle" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunManager" selected="Application.UIManager">
     <configuration name="MainServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -78,41 +140,126 @@
       <workItem from="1592257280370" duration="382000" />
       <workItem from="1592304614334" duration="758000" />
       <workItem from="1592378758709" duration="71000" />
-      <workItem from="1592676693678" duration="3368000" />
+      <workItem from="1592676693678" duration="5950000" />
+      <workItem from="1592813241349" duration="12626000" />
     </task>
+    <task id="LOCAL-00001" summary="pseudodzaialalogowanie">
+      <created>1592680454189</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1592680454189</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="pseudodzaialalogowanie" />
+    <option name="LAST_COMMIT_MESSAGE" value="pseudodzaialalogowanie" />
+  </component>
   <component name="WindowStateProjectService">
-    <state width="2517" height="282" key="GridCell.Tab.0.bottom" timestamp="1592678873493">
+    <state x="1570" y="285" width="819" height="683" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592838568692">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1592678873493" />
-    <state width="2517" height="282" key="GridCell.Tab.0.center" timestamp="1592678873493">
+    <state x="1570" y="285" width="819" height="683" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1592838568692" />
+    <state x="955" y="229" key="FileChooserDialogImpl" timestamp="1592834123497">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1592678873493" />
-    <state width="2517" height="282" key="GridCell.Tab.0.left" timestamp="1592678873493">
+    <state x="955" y="229" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1592834123497" />
+    <state width="2517" height="282" key="GridCell.Tab.0.bottom" timestamp="1592835992284">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1592678873493" />
-    <state width="2517" height="282" key="GridCell.Tab.0.right" timestamp="1592678873493">
+    <state width="2517" height="282" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
+    <state width="2517" height="282" key="GridCell.Tab.0.center" timestamp="1592835992283">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1592678873493" />
-    <state x="760" y="94" key="SettingsEditor" timestamp="1592257430192">
+    <state width="2517" height="282" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992283" />
+    <state width="2517" height="282" key="GridCell.Tab.0.left" timestamp="1592835992283">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="760" y="94" key="SettingsEditor/0.0.2560.1040@0.0.2560.1040" timestamp="1592257430192" />
+    <state width="2517" height="282" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992283" />
+    <state width="2517" height="282" key="GridCell.Tab.0.right" timestamp="1592835992284">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
+    <state width="2517" height="282" key="GridCell.Tab.1.bottom" timestamp="1592835992284">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
+    <state width="2517" height="282" key="GridCell.Tab.1.center" timestamp="1592835992284">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
+    <state width="2517" height="282" key="GridCell.Tab.1.left" timestamp="1592835992284">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
+    <state width="2517" height="282" key="GridCell.Tab.1.right" timestamp="1592835992284">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
+    <state width="2517" height="282" key="GridCell.Tab.2.bottom" timestamp="1592835992284">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.2.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
+    <state width="2517" height="282" key="GridCell.Tab.2.center" timestamp="1592835992284">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.2.center/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
+    <state width="2517" height="282" key="GridCell.Tab.2.left" timestamp="1592835992284">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.2.left/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
+    <state width="2517" height="282" key="GridCell.Tab.2.right" timestamp="1592835992284">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.2.right/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
+    <state width="212" height="457" key="HiddenNamespacesPopup" timestamp="1592837799235">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="212" height="457" key="HiddenNamespacesPopup/0.0.2560.1040@0.0.2560.1040" timestamp="1592837799235" />
+    <state x="760" y="94" key="SettingsEditor" timestamp="1592834166129">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="760" y="94" key="SettingsEditor/0.0.2560.1040@0.0.2560.1040" timestamp="1592834166129" />
+    <state x="872" y="253" key="Vcs.Push.Dialog.v2" timestamp="1592680456926">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="872" y="253" key="Vcs.Push.Dialog.v2/0.0.2560.1040@0.0.2560.1040" timestamp="1592680456926" />
+    <state x="1203" y="466" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1592840072723">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1203" y="466" key="com.intellij.database.run.ParametersPanel.Standalone/0.0.2560.1040@0.0.2560.1040" timestamp="1592840072723" />
+    <state x="1138" y="223" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1592838148031">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1138" y="223" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1592838148031" />
     <state x="1089" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592676882653">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="1089" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1040@0.0.2560.1040" timestamp="1592676882653" />
-    <state x="987" y="253" width="585" height="534" key="find.popup" timestamp="1592679133146">
+    <state x="987" y="253" width="585" height="534" key="find.popup" timestamp="1592819079148">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="987" y="253" width="585" height="534" key="find.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1592679133146" />
+    <state x="987" y="253" width="585" height="534" key="find.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1592819079148" />
+    <state x="936" y="240" key="run.anything.popup" timestamp="1592836020134">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="936" y="240" key="run.anything.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1592836020134" />
   </component>
 </project>

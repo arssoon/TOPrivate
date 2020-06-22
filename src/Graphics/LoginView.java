@@ -57,7 +57,7 @@ public class LoginView  extends HBox {
         hBoxWithButtons.getChildren().add(buttonContinueAsGuest);
         mainVbox.getChildren().add(hBoxWithButtons);
 
-        login.setText("sexikrzysiu69");
+        login.setText("krzysiek");
         password.setText("qwe");
 
         this.getChildren().add(mainVbox);
@@ -76,8 +76,8 @@ public class LoginView  extends HBox {
 
     private void login(){
         //User user =  (User)ClientManager.clientSender.sendToServer(ServerOperation.getUser,login.getText());
-        User user  = new User(1,"Krzysztof","Skalik","sexikrzysiu69","qwe");
-        System.out.println("Sprawdzam poprawnosc loginu i hasla io wgl jest zajebiscie");
+        User user  = new User(1,"Krzysztof","Skalik","krzysiek","qwe");
+        System.out.println("Sprawdzam poprawnosc loginu i hasla i jest dobrze");
         if(password.getText().equals(user.getHaslo())){
             System.out.println("Zalogowano");
             ClientManager.currentLoginUser = user;

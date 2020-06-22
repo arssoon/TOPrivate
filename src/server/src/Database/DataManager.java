@@ -259,8 +259,8 @@ public class DataManager {
     }
 
     private static void addUsersToDatabase(){
-        DatabaseConnector.execute("insert into uzytkownik values(1,'Krzysztof','Skalik','sexikrzysiu69','qwe')");
-        DatabaseConnector.execute("insert into uzytkownik values(2,'Kamil','Niekurzak','kamilLowcaWeronik','lubiewdupe123')");
+        DatabaseConnector.execute("insert into uzytkownik values(1,'Krzysztof','Skalik','krzysiek','qwe')");
+        DatabaseConnector.execute("insert into uzytkownik values(2,'Kamil','Niekurzak','kamil','qwe123')");
     }
     private static ArrayList<String> combineWydarzenieData(String data){
         ArrayList<String> daneU = new ArrayList<>();

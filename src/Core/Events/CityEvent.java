@@ -1,9 +1,8 @@
 package Core.Events;
 
-        import Core.StatusWniosek;
-
-        import java.io.Serializable;
-        import java.util.Date;
+import Core.StatusWniosek;
+import java.io.Serializable;
+import java.util.Date;
 
 public abstract class CityEvent implements Serializable {
     int id;
