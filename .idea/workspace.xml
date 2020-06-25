@@ -19,59 +19,84 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6275d2e-c291-435f-8672-15d194113dff" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="e6275d2e-c291-435f-8672-15d194113dff" name="Default Changelist" comment="poprawione">
+      <change afterPath="$PROJECT_DIR$/src/Graphics/VotingViev.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/ANONYMOUS.TYQsKQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/APPQOSSYS.2YFpMg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/AUDSYS.Hfq4cw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/CTXSYS.Rqsddw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/CTXSYS.Rqsddw.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/DBSFWUSER.8V9FzQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/DBSNMP.vILSdw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/DIP.awgBAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/DVF.9AkBAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/DVF.9AkBAA.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/DVSYS.25jmAw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/DVSYS.25jmAw.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/GGSYS.zQ0KBA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/GSMADMIN_INTERNAL.7niVxg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/GSMADMIN_INTERNAL.7niVxg.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/GSMCATUSER.gPg8XQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/GSMUSER.LKDhPQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/HR.CgkAAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/HR.CgkAAA.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/LBACSYS.lR-tKA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/LBACSYS.lR-tKA.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/MDDATA.wU1Dhw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/MDSYS.tj1dBA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/MDSYS.tj1dBA.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/OJVMSYS.mw8z1g.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/OLAPSYS.YTB22A.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/OLAPSYS.YTB22A.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/ORACLE_OCM.uGKsng.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/ORDDATA.69HX4g.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/ORDDATA.69HX4g.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/ORDPLUGINS.n2XXhg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/ORDPLUGINS.n2XXhg.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/ORDSYS.TIxyiw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/ORDSYS.TIxyiw.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/OUTLN.MCmBBA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/PDBADMIN.IafZ9w.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/PUBLIC.aaZQjQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/REMOTE_SCHEDULER_AGENT.SFS5PQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/SI_INFORMTN_SCHEMA.1AX1JA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/SYS.rUIBAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/SYS.rUIBAA.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/SYSBACKUP.rzZxyg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/SYSDG.8FO7BA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/SYSKM.z1S7BA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/SYSRAC.J16vkg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/SYSTEM.L2avkg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/SYSTEM.L2avkg.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/SYS_UMF.N8onww.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/WMSYS.F0DuBA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/WMSYS.F0DuBA.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/XDB.1lIBAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/XDB.1lIBAA.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f617d9ae-38cb-43fd-9567-3ccc3c34dd78/storage_v2/_src_/schema/XS_NULL.kKXmvg.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Client/Client.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Client/ClientSender.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Client/ServerOperation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/ClientManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Events/CityEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Events/CityEventType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Events/DzienDziecka.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Glos.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/GlosWydarzenia.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/GlosowanieUstawa.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/GlosowanieWydarzenie.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/GlosyWydarzenia.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/ListaWnioskow.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Stanowisko.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/StatusUstawy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/StatusWniosek.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/UstawaMain.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Wniosek.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/AddWniosekView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/AddWydarzenieView$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/AddWydarzenieView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/ConnectionView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/CouncilorView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/GuestView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/LoginView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/MayorView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/UIManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/WyswietlNoweWnioskiView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/WyswietlNoweWydarzeniaView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/WyswietlWszystkieWnioskiView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/server.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ConnectedClient$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ConnectedClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/Database/DataManager$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/Database/DataManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/Database/DatabaseConnector.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/MainServer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ServerListner.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ServerOperation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/projekt TO.iml" beforeDir="false" afterPath="$PROJECT_DIR$/projekt TO.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Events/CityEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Events/CityEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt TO/Core/Client/ClientSender.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt TO/Core/Client/ClientSender.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt TO/Graphics/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt TO/Graphics/LoginView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projekt TO/server/src/Database/DatabaseConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt TO/server/src/Database/DatabaseConnector.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Client/ClientSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Client/ClientSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Graphics/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/LoginView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/src/Database/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/src/Database/DataManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/src/ConnectedClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/src/ConnectedClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/src/Database/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/src/Database/DatabaseConnector.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -142,6 +167,13 @@
       <workItem from="1592378758709" duration="71000" />
       <workItem from="1592676693678" duration="5950000" />
       <workItem from="1592813241349" duration="12626000" />
+      <workItem from="1592843512066" duration="373000" />
+      <workItem from="1592852205331" duration="3513000" />
+      <workItem from="1592857649597" duration="866000" />
+      <workItem from="1592917691100" duration="2641000" />
+      <workItem from="1592923982920" duration="1040000" />
+      <workItem from="1593030053706" duration="1860000" />
+      <workItem from="1593108689325" duration="4401000" />
     </task>
     <task id="LOCAL-00001" summary="pseudodzaialalogowanie">
       <created>1592680454189</created>
@@ -150,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592680454189</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="poprawione">
+      <created>1592843596771</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1592843596771</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,49 +209,58 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="pseudodzaialalogowanie" />
-    <option name="LAST_COMMIT_MESSAGE" value="pseudodzaialalogowanie" />
+    <MESSAGE value="poprawione" />
+    <option name="LAST_COMMIT_MESSAGE" value="poprawione" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1570" y="285" width="819" height="683" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592838568692">
+    <state x="1570" y="285" width="819" height="683" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592920505642">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="1570" y="285" width="819" height="683" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1592838568692" />
+    <state x="1570" y="285" width="819" height="683" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1592920505642" />
+    <state x="1059" y="251" key="#xdebugger.evaluate" timestamp="1592918754356">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1059" y="251" key="#xdebugger.evaluate/0.0.2560.1040@0.0.2560.1040" timestamp="1592918754356" />
+    <state width="382" height="466" key="DebuggerActiveHint" timestamp="1592854368013">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="382" height="466" key="DebuggerActiveHint/0.0.2560.1040@0.0.2560.1040" timestamp="1592854368013" />
     <state x="955" y="229" key="FileChooserDialogImpl" timestamp="1592834123497">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="955" y="229" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1592834123497" />
-    <state width="2517" height="282" key="GridCell.Tab.0.bottom" timestamp="1592835992284">
+    <state width="2517" height="282" key="GridCell.Tab.0.bottom" timestamp="1593031915053">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
-    <state width="2517" height="282" key="GridCell.Tab.0.center" timestamp="1592835992283">
+    <state width="2517" height="282" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1593031915053" />
+    <state width="2517" height="282" key="GridCell.Tab.0.center" timestamp="1593031915052">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992283" />
-    <state width="2517" height="282" key="GridCell.Tab.0.left" timestamp="1592835992283">
+    <state width="2517" height="282" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1593031915052" />
+    <state width="2517" height="282" key="GridCell.Tab.0.left" timestamp="1593031915052">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992283" />
-    <state width="2517" height="282" key="GridCell.Tab.0.right" timestamp="1592835992284">
+    <state width="2517" height="282" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1593031915052" />
+    <state width="2517" height="282" key="GridCell.Tab.0.right" timestamp="1593031915053">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
-    <state width="2517" height="282" key="GridCell.Tab.1.bottom" timestamp="1592835992284">
+    <state width="2517" height="282" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1593031915053" />
+    <state width="2517" height="234" key="GridCell.Tab.1.bottom" timestamp="1592921362385">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
-    <state width="2517" height="282" key="GridCell.Tab.1.center" timestamp="1592835992284">
+    <state width="2517" height="234" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1592921362385" />
+    <state width="2517" height="234" key="GridCell.Tab.1.center" timestamp="1592921362385">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
-    <state width="2517" height="282" key="GridCell.Tab.1.left" timestamp="1592835992284">
+    <state width="2517" height="234" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1592921362385" />
+    <state width="2517" height="234" key="GridCell.Tab.1.left" timestamp="1592921362385">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
-    <state width="2517" height="282" key="GridCell.Tab.1.right" timestamp="1592835992284">
+    <state width="2517" height="234" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1592921362385" />
+    <state width="2517" height="234" key="GridCell.Tab.1.right" timestamp="1592921362385">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="2517" height="282" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1592835992284" />
+    <state width="2517" height="234" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1592921362385" />
     <state width="2517" height="282" key="GridCell.Tab.2.bottom" timestamp="1592835992284">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
@@ -237,29 +285,45 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="760" y="94" key="SettingsEditor/0.0.2560.1040@0.0.2560.1040" timestamp="1592834166129" />
-    <state x="872" y="253" key="Vcs.Push.Dialog.v2" timestamp="1592680456926">
+    <state x="872" y="253" key="Vcs.Push.Dialog.v2" timestamp="1592843599261">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="872" y="253" key="Vcs.Push.Dialog.v2/0.0.2560.1040@0.0.2560.1040" timestamp="1592680456926" />
-    <state x="1203" y="466" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1592840072723">
+    <state x="872" y="253" key="Vcs.Push.Dialog.v2/0.0.2560.1040@0.0.2560.1040" timestamp="1592843599261" />
+    <state x="1203" y="466" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1592924013362">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="1203" y="466" key="com.intellij.database.run.ParametersPanel.Standalone/0.0.2560.1040@0.0.2560.1040" timestamp="1592840072723" />
+    <state x="1203" y="466" key="com.intellij.database.run.ParametersPanel.Standalone/0.0.2560.1040@0.0.2560.1040" timestamp="1592924013362" />
     <state x="1138" y="223" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1592838148031">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="1138" y="223" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1592838148031" />
-    <state x="1089" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592676882653">
+    <state x="1089" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592843552728">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="1089" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1040@0.0.2560.1040" timestamp="1592676882653" />
-    <state x="987" y="253" width="585" height="534" key="find.popup" timestamp="1592819079148">
+    <state x="1089" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1040@0.0.2560.1040" timestamp="1592843552728" />
+    <state x="987" y="253" width="585" height="534" key="find.popup" timestamp="1592918126901">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="987" y="253" width="585" height="534" key="find.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1592819079148" />
+    <state x="987" y="253" width="585" height="534" key="find.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1592918126901" />
     <state x="936" y="240" key="run.anything.popup" timestamp="1592836020134">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="936" y="240" key="run.anything.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1592836020134" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Core/Client/ClientSender.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/server/src/ConnectedClient.java</url>
+          <line>117</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -41,6 +41,7 @@ public class ConnectedClient extends Thread {
                 ServerOperation serverOperation = ServerOperation.valueOf(read);
                 if (serverOperation==ServerOperation.disconnect) {
                     socket.close();
+                    DatabaseConnector.disconnect();
                     return;
                 } else {
                     Object object = objectInputStream.readObject();

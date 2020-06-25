@@ -75,9 +75,10 @@ public class LoginView  extends HBox {
     }
 
     private void login(){
-        //User user =  (User)ClientManager.clientSender.sendToServer(ServerOperation.getUser,login.getText());
-        User user  = new User(1,"Krzysztof","Skalik","krzysiek","qwe");
+        User user =  (User)ClientManager.clientSender.sendToServer(ServerOperation.getUser,login.getText());
+        //User user  = new User(1,"Krzysztof","Skalik","krzysiek","qwe");
         System.out.println("Sprawdzam poprawnosc loginu i hasla i jest dobrze");
+        try{
         if(password.getText().equals(user.getHaslo())){
             System.out.println("Zalogowano");
             ClientManager.currentLoginUser = user;
@@ -90,6 +91,7 @@ public class LoginView  extends HBox {
                     uiManager.changeViewToCouncilorView();
                     break;
             }*/
-        }
+        }}catch (Exception e){ e.printStackTrace();}
+
     }
 }

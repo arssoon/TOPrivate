@@ -21,11 +21,10 @@ public class ClientSender {
 
 
             return objectInputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
 
         try {
             return objectInputStream.readObject();

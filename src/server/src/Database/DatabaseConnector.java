@@ -5,14 +5,14 @@ import java.sql.*;
 
 
 public class DatabaseConnector {
-    static  String DB_URL = "jdbc:oracle:thin:@localhost:1521/XEPDB1";
+    static  String DB_URL = "jdbc:oracle:thin:@localhost:1521/XE";
     static Statement stmt = null;
     static java.sql.Connection conn = null;
     static ResultSet rs;
 
     //  Database credentials
-    static String USER = "hr";
-    static String PASS = "hr";
+    static String USER = "kris";
+    static String PASS = "test";
 
     public static void connect()  {
         try {
@@ -22,6 +22,7 @@ public class DatabaseConnector {
             //STEP 3: Open a connection
             System.out.println("Connecting to a selected database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn.setAutoCommit(true);
 
             System.out.println("Connected database successfully...");
 
