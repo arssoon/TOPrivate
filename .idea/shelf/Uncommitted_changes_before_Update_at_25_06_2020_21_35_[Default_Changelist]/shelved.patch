@@ -1,0 +1,640 @@
+Index: src/server/src/Database/DatabaseConnector.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package server.src.Database;\r\n\r\nimport java.io.*;\r\nimport java.sql.*;\r\n\r\n\r\npublic class DatabaseConnector {\r\n    static  String DB_URL = \"jdbc:oracle:thin:@localhost:1521/XEPDB1\";\r\n    static Statement stmt = null;\r\n    static java.sql.Connection conn = null;\r\n    static ResultSet rs;\r\n\r\n    //  Database credentials\r\n    static String USER = \"hr\";\r\n    static String PASS = \"hr\";\r\n\r\n    public static void connect()  {\r\n        try {\r\n            //STEP 2: Register JDBC driver\r\n            Class.forName(\"oracle.jdbc.driver.OracleDriver\");\r\n\r\n            //STEP 3: Open a connection\r\n            System.out.println(\"Connecting to a selected database...\");\r\n            conn = DriverManager.getConnection(DB_URL, USER, PASS);\r\n\r\n            System.out.println(\"Connected database successfully...\");\r\n\r\n            //STEP 4: Execute a query\r\n            System.out.println(\"Creating statement...\");\r\n            stmt = conn.createStatement();\r\n        } catch (SQLException se) {\r\n            //Handle errors for JDBC\r\n            se.printStackTrace();\r\n        } catch (Exception e) {\r\n            //Handle errors for Class.forName\r\n            e.printStackTrace();\r\n        }//end try\r\n    }\r\n    public static void disconnect(){\r\n        try {\r\n            stmt.close();\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n        }\r\n        try {\r\n            if (stmt != null)\r\n                conn.close();\r\n        } catch (SQLException se) {\r\n        }// do nothing\r\n        try {\r\n            if (conn != null)\r\n                conn.close();\r\n        } catch (SQLException se) {\r\n            se.printStackTrace();\r\n        }//end finally try\r\n    }\r\n\r\n    public static ResultSet  getResultSet(String sql) {\r\n        try {\r\n            return stmt.executeQuery(sql);\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n        }\r\n        return null;\r\n    }\r\n    public static void execute(String sql){\r\n        try {\r\n            stmt.execute(sql);\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/server/src/Database/DatabaseConnector.java	(revision 77da8ae373fc7e6afa1eb5d353978bdecfc76977)
++++ src/server/src/Database/DatabaseConnector.java	(date 1593111452661)
+@@ -23,11 +23,19 @@
+             System.out.println("Connecting to a selected database...");
+             conn = DriverManager.getConnection(DB_URL, USER, PASS);
+ 
++            //STEP 4: Set auto commit as true.
++            conn.setAutoCommit(false);
++
+             System.out.println("Connected database successfully...");
+ 
+-            //STEP 4: Execute a query
++            //STEP 5: Execute a query
+             System.out.println("Creating statement...");
+             stmt = conn.createStatement();
++
++            //STEP 8: Commit data here.
++            System.out.println("Commiting data here....");
++            conn.commit();
++
+         } catch (SQLException se) {
+             //Handle errors for JDBC
+             se.printStackTrace();
+Index: src/server/src/ConnectedClient.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package server.src;\r\n\r\nimport Core.Client.ServerOperation;\r\nimport Core.Events.CityEvent;\r\nimport Core.Events.CityEventType;\r\nimport Core.StatusWniosek;\r\nimport Core.User;\r\nimport Core.Wniosek;\r\nimport server.src.Database.DataManager;\r\nimport server.src.Database.DatabaseConnector;\r\n\r\nimport java.io.*;\r\nimport java.net.Socket;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class ConnectedClient extends Thread {\r\n\r\n    protected Socket socket;\r\n    OutputStream outputStream;\r\n    InputStream inputStream;\r\n    ObjectOutputStream objectOutputStream;\r\n    ObjectInputStream objectInputStream;\r\n\r\n    public ConnectedClient(Socket clientSocket) {\r\n        this.socket = clientSocket;\r\n    }\r\n\r\n    public void run() {\r\n        try {\r\n             outputStream = socket.getOutputStream();\r\n             inputStream = socket.getInputStream();\r\n             objectOutputStream = new ObjectOutputStream(outputStream);\r\n             objectInputStream = new ObjectInputStream(inputStream);\r\n        } catch (IOException e) {\r\n            return;\r\n        }\r\n        while (true) {\r\n            try {\r\n                String read = (String) objectInputStream.readObject();\r\n                ServerOperation serverOperation = ServerOperation.valueOf(read);\r\n                if (serverOperation==ServerOperation.disconnect) {\r\n                    socket.close();\r\n                    return;\r\n                } else {\r\n                    Object object = objectInputStream.readObject();\r\n                    executeOperation(serverOperation,object);\r\n                }\r\n            } catch (IOException e) {\r\n                e.printStackTrace();\r\n                return;\r\n            } catch (ClassNotFoundException e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n    }\r\n\r\n    private synchronized void executeOperation(ServerOperation serverOperation,Object object){\r\n\r\n        switch (serverOperation){\r\n            case addWniosek:\r\n                Wniosek wniosek = (Wniosek) object;\r\n                DataManager.addWniosek(wniosek);\r\n                try {\r\n                    objectOutputStream.writeObject(\"nic\");\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n                break;\r\n            case getWniosek:\r\n                int id = (Integer) object;\r\n                try {\r\n                    objectOutputStream.writeObject(DataManager.getWniosek(id));\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n\r\n                break;\r\n            case getListaWnioskowByStatus:\r\n                System.out.println(\"get LISTA WNIOSKOW BY STATUS\");\r\n                List<Wniosek> lista = DataManager.getListaWnioskowByStatus((StatusWniosek) object);\r\n                try {\r\n                    objectOutputStream.writeObject(lista);\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n                break;\r\n            case getLiczbaWnioskow:\r\n                System.out.println(\"asfd\");\r\n                int liczba  = DataManager.getLiczbaWnioskow();\r\n                try {\r\n                    objectOutputStream.writeObject(liczba);\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n                break;\r\n            case addWydarzenie:\r\n                CityEvent cityEvent = (CityEvent) object;\r\n                System.out.println(\"asfd\");\r\n                DataManager.addWydarzenie(cityEvent);\r\n                try {\r\n                    objectOutputStream.writeObject(\"nic\");\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n                break;\r\n            case getLiczbaWydarzen:\r\n                System.out.println(\"asfd\");\r\n                int liczbaw  = DataManager.getLiczbaWydarzen();\r\n                try {\r\n                    objectOutputStream.writeObject(liczbaw);\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n                break;\r\n            case getUser:\r\n                User user  = DataManager.getUserByLogin((String)object);\r\n                try {\r\n                    objectOutputStream.writeObject(user);\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n                break;\r\n            case getListaWydarzenByStatus:\r\n                List<CityEvent> listace = DataManager.getWydarzenia((CityEventType) object);\r\n                try {\r\n                    objectOutputStream.writeObject(listace);\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n                break;\r\n        }\r\n\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/server/src/ConnectedClient.java	(revision 77da8ae373fc7e6afa1eb5d353978bdecfc76977)
++++ src/server/src/ConnectedClient.java	(date 1593113384597)
+@@ -6,8 +6,11 @@
+ import Core.StatusWniosek;
+ import Core.User;
+ import Core.Wniosek;
++import Graphics.WyswietlNoweWnioskiView;
+ import server.src.Database.DataManager;
+ import server.src.Database.DatabaseConnector;
++import server.src.ServerListner;
++import server.src.MainServer;
+ 
+ import java.io.*;
+ import java.net.Socket;
+@@ -41,6 +44,7 @@
+                 ServerOperation serverOperation = ServerOperation.valueOf(read);
+                 if (serverOperation==ServerOperation.disconnect) {
+                     socket.close();
++                    DatabaseConnector.disconnect();
+                     return;
+                 } else {
+                     Object object = objectInputStream.readObject();
+@@ -86,7 +90,6 @@
+                 }
+                 break;
+             case getLiczbaWnioskow:
+-                System.out.println("asfd");
+                 int liczba  = DataManager.getLiczbaWnioskow();
+                 try {
+                     objectOutputStream.writeObject(liczba);
+@@ -96,7 +99,6 @@
+                 break;
+             case addWydarzenie:
+                 CityEvent cityEvent = (CityEvent) object;
+-                System.out.println("asfd");
+                 DataManager.addWydarzenie(cityEvent);
+                 try {
+                     objectOutputStream.writeObject("nic");
+@@ -105,7 +107,6 @@
+                 }
+                 break;
+             case getLiczbaWydarzen:
+-                System.out.println("asfd");
+                 int liczbaw  = DataManager.getLiczbaWydarzen();
+                 try {
+                     objectOutputStream.writeObject(liczbaw);
+@@ -129,6 +130,19 @@
+                     e.printStackTrace();
+                 }
+                 break;
++            case zmienStatusWniosku:
++                System.out.println("Zmiana statusu wniosku");
++                Wniosek wniosek1 = (Wniosek) object;
++
++                DataManager.zmienStatusWniosku(wniosek1.getNrWniosku(), StatusWniosek.ZATWIERDZONE);
++
++                try {
++                    objectOutputStream.writeObject("nic");
++                } catch (IOException e) {
++                    e.printStackTrace();
++                }
++                break;
++
+         }
+ 
+ 
+Index: src/Graphics/LoginView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Graphics;\r\n\r\nimport Core.Client.ServerOperation;\r\nimport Core.ClientManager;\r\nimport Core.User;\r\nimport javafx.geometry.Insets;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.TextArea;\r\nimport javafx.scene.layout.HBox;\r\nimport javafx.scene.layout.VBox;\r\n\r\npublic class LoginView  extends HBox {\r\n    UIManager uiManager;\r\n\r\n    TextArea login = new TextArea();\r\n    TextArea password = new TextArea();\r\n    Label labelLogin;\r\n    Label labelPassword;\r\n    Button buttonContinueAsGuest;\r\n\r\n    Button loginButton;\r\n    VBox mainVbox;\r\n    HBox hBoxWithButtons;\r\n\r\n\r\n    public LoginView(UIManager uiManager){\r\n        this.uiManager = uiManager;\r\n        mainVbox = new VBox();\r\n        labelLogin = new Label(\"Login: \");\r\n        labelPassword = new Label(\"Haslo: \");\r\n        loginButton = new Button(\"Zaloguj\");\r\n        buttonContinueAsGuest = new Button(\"Kontynuuj jako niezalogowany\");\r\n        hBoxWithButtons = new HBox();\r\n\r\n        addStructure();\r\n        setActionEvents();\r\n    }\r\n    public void addStructure(){\r\n\r\n\r\n        login.setMaxHeight(15);\r\n        password.setMaxHeight(15);\r\n\r\n        loginButton.setMinSize(300,20);\r\n\r\n        mainVbox.setSpacing(5);\r\n        this.setPadding(new Insets(100,0,0,0));\r\n\r\n        hBoxWithButtons.setSpacing(10);\r\n\r\n        mainVbox.getChildren().add(labelLogin);\r\n        mainVbox.getChildren().add(login);\r\n        mainVbox.getChildren().add(labelPassword);\r\n        mainVbox.getChildren().add(password);\r\n        hBoxWithButtons.getChildren().add(loginButton);\r\n        hBoxWithButtons.getChildren().add(buttonContinueAsGuest);\r\n        mainVbox.getChildren().add(hBoxWithButtons);\r\n\r\n        login.setText(\"sexikrzysiu69\");\r\n        password.setText(\"qwe\");\r\n\r\n        this.getChildren().add(mainVbox);\r\n\r\n\r\n    }\r\n\r\n    private void setActionEvents(){\r\n        buttonContinueAsGuest.setOnAction(event -> {\r\n            uiManager.changeViewToGuestView();\r\n        });\r\n        loginButton.setOnAction(event -> {\r\n            login();\r\n        });\r\n    }\r\n\r\n    private void login(){\r\n        //User user =  (User)ClientManager.clientSender.sendToServer(ServerOperation.getUser,login.getText());\r\n        User user  = new User(1,\"Krzysztof\",\"Skalik\",\"sexikrzysiu69\",\"qwe\");\r\n        System.out.println(\"Sprawdzam poprawnosc loginu i hasla io wgl jest zajebiscie\");\r\n        if(password.getText().equals(user.getHaslo())){\r\n            System.out.println(\"Zalogowano\");\r\n            ClientManager.currentLoginUser = user;\r\n            uiManager.changeViewToMayorView();\r\n            /*switch (user.getStanowisko()){\r\n                case 1:\r\n                    uiManager.changeViewToMayorView();\r\n                    break;\r\n                case 2:\r\n                    uiManager.changeViewToCouncilorView();\r\n                    break;\r\n            }*/\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Graphics/LoginView.java	(revision 77da8ae373fc7e6afa1eb5d353978bdecfc76977)
++++ src/Graphics/LoginView.java	(date 1593113428163)
+@@ -18,6 +18,7 @@
+     Label labelLogin;
+     Label labelPassword;
+     Button buttonContinueAsGuest;
++    Button exitButton;
+ 
+     Button loginButton;
+     VBox mainVbox;
+@@ -30,6 +31,7 @@
+         labelLogin = new Label("Login: ");
+         labelPassword = new Label("Haslo: ");
+         loginButton = new Button("Zaloguj");
++        exitButton = new Button("Exit");
+         buttonContinueAsGuest = new Button("Kontynuuj jako niezalogowany");
+         hBoxWithButtons = new HBox();
+ 
+@@ -53,6 +55,7 @@
+         mainVbox.getChildren().add(login);
+         mainVbox.getChildren().add(labelPassword);
+         mainVbox.getChildren().add(password);
++        mainVbox.getChildren().add(exitButton);
+         hBoxWithButtons.getChildren().add(loginButton);
+         hBoxWithButtons.getChildren().add(buttonContinueAsGuest);
+         mainVbox.getChildren().add(hBoxWithButtons);
+@@ -69,27 +72,32 @@
+         buttonContinueAsGuest.setOnAction(event -> {
+             uiManager.changeViewToGuestView();
+         });
++
+         loginButton.setOnAction(event -> {
+             login();
+         });
++
++        try {
++            exitButton.setOnAction(event -> {
++                UIManager.primaryStage.close();
++                ClientManager.clientSender.sendToServer(ServerOperation.disconnect, null);
++            });
++        }catch (Exception e) {
++            e.printStackTrace();
++        }
++
++
+     }
+ 
+     private void login(){
+-        //User user =  (User)ClientManager.clientSender.sendToServer(ServerOperation.getUser,login.getText());
+-        User user  = new User(1,"Krzysztof","Skalik","sexikrzysiu69","qwe");
++        User user =  (User)ClientManager.clientSender.sendToServer(ServerOperation.getUser,login.getText());
++//        User user  = new User(1,"Krzysztof","Skalik","sexikrzysiu69","qwe");
+         System.out.println("Sprawdzam poprawnosc loginu i hasla io wgl jest zajebiscie");
+         if(password.getText().equals(user.getHaslo())){
+             System.out.println("Zalogowano");
+             ClientManager.currentLoginUser = user;
+             uiManager.changeViewToMayorView();
+-            /*switch (user.getStanowisko()){
+-                case 1:
+-                    uiManager.changeViewToMayorView();
+-                    break;
+-                case 2:
+-                    uiManager.changeViewToCouncilorView();
+-                    break;
+-            }*/
++
+         }
+     }
+ }
+Index: src/Core/Client/ClientSender.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Core.Client;\r\n\r\nimport java.io.*;\r\n\r\npublic class ClientSender {\r\n\r\n    ObjectOutputStream outputStream;\r\n    ObjectInputStream objectInputStream;\r\n\r\n\r\n    public ClientSender(ObjectOutputStream outputStream,ObjectInputStream objectInputStream) {\r\n        this.outputStream = outputStream;\r\n        this.objectInputStream = objectInputStream;\r\n    }\r\n\r\n    public Object sendToServer(ServerOperation serverOperation,Object object) {\r\n\r\n        try {\r\n            outputStream.writeObject(serverOperation.toString());\r\n            outputStream.writeObject(object);\r\n\r\n\r\n            return objectInputStream.readObject();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        } catch (ClassNotFoundException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        try {\r\n            return objectInputStream.readObject();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        } catch (ClassNotFoundException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        return null;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Core/Client/ClientSender.java	(revision 77da8ae373fc7e6afa1eb5d353978bdecfc76977)
++++ src/Core/Client/ClientSender.java	(date 1593111615847)
+@@ -18,8 +18,6 @@
+         try {
+             outputStream.writeObject(serverOperation.toString());
+             outputStream.writeObject(object);
+-
+-
+             return objectInputStream.readObject();
+         } catch (IOException e) {
+             e.printStackTrace();
+Index: src/Graphics/WyswietlNoweWnioskiView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Graphics;\r\n\r\nimport Core.Client.ServerOperation;\r\nimport Core.ClientManager;\r\nimport Core.StatusWniosek;\r\nimport Core.Wniosek;\r\nimport javafx.geometry.Pos;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.RadioButton;\r\nimport javafx.scene.control.ToggleGroup;\r\nimport javafx.scene.layout.*;\r\nimport javafx.scene.paint.Color;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class WyswietlNoweWnioskiView extends HBox {\r\n\r\n    VBox mainVBox;\r\n    ArrayList<HBox>listOfWnioski;\r\n    Button cofnikButton;\r\n\r\n    UIManager uiManager;\r\n    public WyswietlNoweWnioskiView(UIManager uiManager){\r\n        this.uiManager = uiManager;\r\n        mainVBox = new VBox();\r\n        listOfWnioski = new ArrayList<>();\r\n        cofnikButton = new Button(\"Cofnij\");\r\n        getWnioskiFromDatabase();\r\n        addStructure();\r\n        setActionEvents();\r\n    }\r\n\r\n    private void getWnioskiFromDatabase(){\r\n        List<Wniosek> wnioski = (List)ClientManager.clientSender.sendToServer(ServerOperation.getListaWnioskowByStatus,StatusWniosek.DO_ROZPATRZENIA);\r\n        for(Wniosek w:wnioski)\r\n            listOfWnioski.add(createWniosekElement(w));\r\n    }\r\n\r\n\r\n    private HBox createWniosekElement(Wniosek wniosek){\r\n        HBox element = new HBox();\r\n        VBox dane = new VBox();\r\n        VBox glosowanie = new VBox();\r\n\r\n\r\n        Label tytul = new Label(\"Tytul: \"+wniosek.getTytul());\r\n        Label tresc = new Label(\"Tresc: \"+wniosek.getTresc());\r\n        Label data = new Label(\"Data wplywu: \"+wniosek.getDataWplywu());\r\n        Label autor = new Label(\"Autor: \"+wniosek.getAutor());\r\n        Label status = new Label(\"Status: \"+wniosek.getStatusWniosek().toString());\r\n\r\n        dane.getChildren().add(tytul);\r\n        dane.getChildren().add(tresc);\r\n        dane.getChildren().add(data);\r\n        dane.getChildren().add(autor);\r\n        dane.getChildren().add(status);\r\n\r\n        ToggleGroup group = new ToggleGroup();\r\n        RadioButton takButton = new RadioButton(\"Zatwierdz\");\r\n        RadioButton nieButton = new RadioButton(\"Odrzuć\");\r\n        Button wykonajButton  = new Button(\"Wykonaj\");\r\n        takButton.setToggleGroup(group);\r\n        nieButton.setToggleGroup(group);\r\n\r\n        glosowanie.getChildren().add(takButton);\r\n        glosowanie.getChildren().add(nieButton);\r\n        glosowanie.getChildren().add(wykonajButton);\r\n        glosowanie.setMinWidth(100);\r\n\r\n        dane.setPrefWidth(450);\r\n\r\n        element.getChildren().add(dane);\r\n        element.getChildren().add(glosowanie);\r\n\r\n        element.setStyle(\"-fx-background-color: Grey \");\r\n        element.setBorder(new Border((new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))));\r\n        element.setMinWidth(550);\r\n\r\n        return element;\r\n    }\r\n    public void addStructure(){\r\n        for(HBox hBox:listOfWnioski)\r\n            mainVBox.getChildren().add(hBox);\r\n        mainVBox.getChildren().add(cofnikButton);\r\n        this.getChildren().add(mainVBox);\r\n    }\r\n\r\n    private void setActionEvents(){\r\n        cofnikButton.setOnAction(event -> {\r\n            uiManager.changeViewToMayorView();\r\n        });\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Graphics/WyswietlNoweWnioskiView.java	(revision 77da8ae373fc7e6afa1eb5d353978bdecfc76977)
++++ src/Graphics/WyswietlNoweWnioskiView.java	(date 1593111078182)
+@@ -4,29 +4,34 @@
+ import Core.ClientManager;
+ import Core.StatusWniosek;
+ import Core.Wniosek;
+-import javafx.geometry.Pos;
+ import javafx.scene.control.Button;
+ import javafx.scene.control.Label;
+ import javafx.scene.control.RadioButton;
+ import javafx.scene.control.ToggleGroup;
+ import javafx.scene.layout.*;
+ import javafx.scene.paint.Color;
++import server.src.Database.DataManager;
+ 
+ import java.util.ArrayList;
++import java.util.Date;
+ import java.util.List;
+ 
+ public class WyswietlNoweWnioskiView extends HBox {
+ 
+     VBox mainVBox;
+-    ArrayList<HBox>listOfWnioski;
+-    Button cofnikButton;
++    ArrayList<HBox> listOfWnioski;
++    Button cofnijButton;
++    RadioButton takButton;
++    ToggleGroup group;
++    RadioButton nieButton;
++    Button wykonajButton;
+ 
+     UIManager uiManager;
+     public WyswietlNoweWnioskiView(UIManager uiManager){
+         this.uiManager = uiManager;
+         mainVBox = new VBox();
+         listOfWnioski = new ArrayList<>();
+-        cofnikButton = new Button("Cofnij");
++        cofnijButton = new Button("Cofnij");
+         getWnioskiFromDatabase();
+         addStructure();
+         setActionEvents();
+@@ -44,7 +49,6 @@
+         VBox dane = new VBox();
+         VBox glosowanie = new VBox();
+ 
+-
+         Label tytul = new Label("Tytul: "+wniosek.getTytul());
+         Label tresc = new Label("Tresc: "+wniosek.getTresc());
+         Label data = new Label("Data wplywu: "+wniosek.getDataWplywu());
+@@ -57,10 +61,10 @@
+         dane.getChildren().add(autor);
+         dane.getChildren().add(status);
+ 
+-        ToggleGroup group = new ToggleGroup();
+-        RadioButton takButton = new RadioButton("Zatwierdz");
+-        RadioButton nieButton = new RadioButton("Odrzuć");
+-        Button wykonajButton  = new Button("Wykonaj");
++        group = new ToggleGroup();
++        takButton = new RadioButton("Zatwierdz");
++        nieButton = new RadioButton("Odrzuć");
++        wykonajButton  = new Button("Wykonaj");
+         takButton.setToggleGroup(group);
+         nieButton.setToggleGroup(group);
+ 
+@@ -83,13 +87,36 @@
+     public void addStructure(){
+         for(HBox hBox:listOfWnioski)
+             mainVBox.getChildren().add(hBox);
+-        mainVBox.getChildren().add(cofnikButton);
++        mainVBox.getChildren().add(cofnijButton);
++
+         this.getChildren().add(mainVBox);
+     }
+ 
+     private void setActionEvents(){
+-        cofnikButton.setOnAction(event -> {
++
++        cofnijButton.setOnAction(event -> {
+             uiManager.changeViewToMayorView();
++
++        });
++        wykonajButton.setOnAction(event -> {
++            int liczba = listOfWnioski.size();
++            System.out.println("liczba: " + listOfWnioski.size());
++            Wniosek wniosek = new Wniosek(liczba,
++                    null,
++                    null,
++                    new Date(),
++                    null,
++                    new Date(),
++                    StatusWniosek.DO_ROZPATRZENIA,
++                    liczba,
++                    new Date()
++            );
++
++            System.out.println("Zmiana statusu wniosku");
++
++            ClientManager.clientSender.sendToServer(ServerOperation.zmienStatusWniosku, wniosek);
++
++            System.out.println("Po zmianie");
+         });
+     }
+ 
+Index: src/Graphics/UIManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Graphics;\r\n\r\nimport Core.ClientManager;\r\nimport javafx.application.Application;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.layout.HBox;\r\nimport javafx.scene.layout.StackPane;\r\nimport javafx.stage.Stage;\r\n\r\npublic class UIManager extends Application {\r\n\r\n    StackPane root;\r\n    Scene scene;\r\n    HBox currentView;\r\n\r\n    ConnectionView connectionView;\r\n    LoginView loginView;\r\n    GuestView guestView;\r\n    MayorView mayorView;\r\n    AddWydarzenieView addWydarzenieView;\r\n    AddWniosekView addWniosekView;\r\n\r\n\r\n    public static HBox lastView;\r\n\r\n\r\n\r\n    @Override\r\n    public void start(Stage primaryStage) throws Exception {\r\n        createViews();\r\n\r\n        currentView = connectionView;\r\n\r\n\r\n        beginConfiguration(primaryStage);\r\n    }\r\n\r\n    private void createViews(){\r\n        connectionView = new ConnectionView(this);\r\n        loginView = new LoginView(this);\r\n        guestView = new GuestView(this);\r\n        //mayorView = new MayorView(this);\r\n        addWniosekView = new AddWniosekView(this);\r\n        addWydarzenieView = new AddWydarzenieView(this);\r\n        ClientManager clientManager = new ClientManager();\r\n    }\r\n\r\n\r\n    private void beginConfiguration(Stage primaryStage){\r\n        root = new StackPane();\r\n        lastView= new HBox();\r\n        lastView.getChildren().add(connectionView);\r\n        root.getChildren().add(currentView);\r\n\r\n        scene = new Scene(root, 1000, 750);\r\n        primaryStage.setTitle(\"Hello World!\");\r\n        primaryStage.setScene(scene);\r\n        primaryStage.show();\r\n\r\n    }\r\n\r\n\r\n    public static void main(String[] args){\r\n        UIManager.launch();\r\n    }\r\n\r\n    public void changeViewToLogin(){\r\n        currentView.getChildren().set(0,loginView);\r\n    }\r\n    public void changeViewToGuestView(){\r\n        currentView.getChildren().set(0,guestView);\r\n    }\r\n    public void changeViewToAddWniosekView(){\r\n        currentView.getChildren().set(0,addWniosekView);\r\n    }\r\n    public void changeViewToAddWydarzenieView(){\r\n        currentView.getChildren().set(0,addWydarzenieView);\r\n    }\r\n    public void changeViewToWyswietlNoweWnioskiView(){\r\n        currentView.getChildren().set(0,new WyswietlNoweWnioskiView(this));\r\n    }\r\n    public void changeViewToWyswietlNoweWydarzeniaView(){\r\n        currentView.getChildren().set(0,new WyswietlNoweWydarzeniaView(this));\r\n    }\r\n    public void changeViewToMayorView(){\r\n        currentView.getChildren().set(0,new MayorView(this));\r\n    }\r\n    public void changeViewToCouncilorView(){\r\n        currentView.getChildren().set(0,new CouncilorView(this));\r\n    }\r\n    public void changeViewToWyswietlWszystkieWnioskiView(){\r\n        currentView.getChildren().set(0,new WyswietlWszystkieWnioskiView(this));\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Graphics/UIManager.java	(revision 77da8ae373fc7e6afa1eb5d353978bdecfc76977)
++++ src/Graphics/UIManager.java	(date 1593112439279)
+@@ -6,11 +6,13 @@
+ import javafx.scene.layout.HBox;
+ import javafx.scene.layout.StackPane;
+ import javafx.stage.Stage;
++import server.src.Database.DataManager;
+ 
+ public class UIManager extends Application {
+ 
+     StackPane root;
+-    Scene scene;
++    static Stage primaryStage;
++    static Scene scene;
+     HBox currentView;
+ 
+     ConnectionView connectionView;
+@@ -28,11 +30,10 @@
+     @Override
+     public void start(Stage primaryStage) throws Exception {
+         createViews();
+-
+         currentView = connectionView;
+-
+-
++        this.primaryStage = primaryStage;
+         beginConfiguration(primaryStage);
++
+     }
+ 
+     private void createViews(){
+Index: src/server/src/Database/DataManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package server.src.Database;\r\n\r\n\r\nimport Core.*;\r\nimport Core.Events.CityEvent;\r\nimport Core.Events.CityEventType;\r\nimport Core.Events.DzienDziecka;\r\n\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport java.text.ParseException;\r\nimport java.text.SimpleDateFormat;\r\nimport java.util.ArrayList;\r\nimport java.util.Date;\r\nimport java.util.List;\r\n\r\npublic class DataManager {\r\n\r\n    public static void addWniosek(Wniosek wniosek){\r\n        SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-mm-dd hh:mm:ss\");\r\n        String sql = (\"INSERT INTO WNIOSEK (id_wniosek,tytul,tresc,dataa,AUTOR,DATA_MODYFIKACJI,STATUS,NUMER_WNIOSKU,DATA_ROZPOCZECIA_GLOSOWANIA) VALUES (\"\r\n                +wniosek.getId()+\",'\"\r\n                +wniosek.getTytul()+\"','\"\r\n                +wniosek.getTresc()+\"','\"\r\n                +sdf.format(wniosek.getDataWplywu())+\"','\"\r\n                +wniosek.getAutor()+\"','\"\r\n                +sdf.format(wniosek.getDataModyfikaci())+\"','\"\r\n                +wniosek.getStatusWniosek()+\"',\"\r\n                +wniosek.getNrWniosku()+\",'\"\r\n                +sdf.format(wniosek.getDataRozpoczeciaGlosowania())+\"')\");\r\n        DatabaseConnector.execute(sql);\r\n    }\r\n    public static void utworzGlosowanieWniosek(int id)\r\n    {\r\n        Date date = new Date();\r\n        SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-mm-dd hh:mm:ss\");\r\n        String sql=(\"INSERT INTO Glosowanie_Wydarzenie(id_glosowanie_wydarzenie,status,data_rozpoczecia,id_wydarzenie) VALUES(\"\r\n                +(getLiczbaWnioskow()+1) + \",'\"\r\n                +StatusUstawy.ROZPOCZETA+ \"','\"\r\n                +sdf.format(date)+ \"','\"\r\n                +id+ \"')\");\r\n        DatabaseConnector.execute(sql);\r\n\r\n    }\r\n    public static void zaglosujWniosek(int idWniosku, int idOsoby, Glos glos)\r\n    {\r\n        Date date = new Date();\r\n        SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-mm-dd hh:mm:ss\");\r\n        String sql=(\"INSERT INTO Glosy_Wydarzenia(id_glosy_wydarzenia,dataa,glos,id_uzytkownik,id_wydarzenie) VALUES(\"\r\n                +(getLiczbaGlosyWnioskow()+1)+\",'\"\r\n                +sdf.format(date)+\"','\"\r\n                +glos+\"',\"\r\n                +idOsoby+\",\"\r\n                +idWniosku+ \")\");\r\n            DatabaseConnector.execute(sql);\r\n    }\r\n\r\n\r\n    public static Wniosek getWniosek(int id){\r\n        SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-mm-dd hh:mm:ss\");\r\n        String sql = \"SELECT * FROM Wniosek WHERE id_wniosek = \"+id+\"\";\r\n        ResultSet rs = DatabaseConnector.getResultSet(sql);\r\n        Wniosek wniosek = null;\r\n\r\n        try {\r\n                rs.next();\r\n                wniosek = new Wniosek(\r\n                        rs.getInt(\"ID_WNIOSEK\"),\r\n                        rs.getString(\"TYTUL\"),\r\n                        rs.getString(\"TRESC\"),\r\n                        sdf.parse(rs.getString(\"DATAA\")),\r\n                        rs.getString(\"AUTOR\"),\r\n                        sdf.parse(rs.getString(\"data_modyfikacji\")),\r\n                        StatusWniosek.valueOf(rs.getString(\"STATUS\")),\r\n                        rs.getInt(\"numer_wniosku\"),\r\n                        sdf.parse(rs.getString(\"data_rozpoczecia_glosowania\")));\r\n\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n        } catch (ParseException e) {\r\n            e.printStackTrace();\r\n        }\r\n        return wniosek;\r\n    }\r\n\r\n    public static List<Wniosek> getListaWnioskowByStatus(StatusWniosek statusWniosek){\r\n        String sql = \"SELECT * FROM Wniosek WHERE status = '\"+statusWniosek+\"'\";\r\n        ResultSet rs = DatabaseConnector.getResultSet(sql);\r\n        List<Wniosek> listaWnioskow = new ArrayList<>();\r\n        SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-mm-dd hh:mm:ss\");\r\n        try {\r\n            while (rs.next()) {\r\n                listaWnioskow.add(new Wniosek(\r\n                        rs.getInt(\"ID_WNIOSEK\"),\r\n                        rs.getString(\"tytul\"),\r\n                        rs.getString(\"tresc\"),\r\n                        (Date)sdf.parse(rs.getString(\"DATAA\")),\r\n                        rs.getString(\"autor\"),\r\n                        (Date)sdf.parse(rs.getString(\"DATA_MODYFIKACJI\")),\r\n                        StatusWniosek.valueOf(rs.getString(\"status\")),\r\n                        rs.getInt(\"numer_wniosku\"),\r\n                        (Date)sdf.parse(rs.getString(\"DATA_ROZPOCZECIA_GLOSOWANIA\"))));\r\n            }\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n        } catch (ParseException e) {\r\n            e.printStackTrace();\r\n        }\r\n        return listaWnioskow;\r\n    }\r\n    public static void zmienStatusWniosku(int id,StatusWniosek statusWniosek)\r\n    {\r\n        String sql=(\"UPDATE WNIOSEK SET STATUS = '\"+statusWniosek+\"' WHERE ID_WNIOSEK = '\"+id+\"'\");\r\n        DatabaseConnector.execute(sql);\r\n    }\r\n    public static void zmienStatusWydarzenia(int id,StatusWniosek statusWniosek)\r\n    {\r\n        String sql=(\"UPDATE Wydarzenie SET STATUS = '\"+statusWniosek+\"' WHERE ID_WYDARZENIE = '\"+id+\"'\");\r\n        DatabaseConnector.execute(sql);\r\n    }\r\n\r\n\r\n    public static int getLiczbaWnioskow(){\r\n        String sql = \"select count(*) from Wniosek\";\r\n        ResultSet rs =DatabaseConnector.getResultSet(sql);\r\n        int liczba=0;\r\n        try {\r\n            rs.next();\r\n            liczba =  (rs.getInt(1));\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n        }\r\n        return liczba;\r\n    }\r\n    public static int getLiczbaGlosyWnioskow(){\r\n        String sql = \"select count(*) from Glosy_Wydarzenia\";\r\n        ResultSet rs =DatabaseConnector.getResultSet(sql);\r\n        int liczba=0;\r\n        try {\r\n            rs.next();\r\n            liczba =  (rs.getInt(1));\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n        }\r\n        return liczba;\r\n    }\r\n    public static int getLiczbaWydarzen(){\r\n        String sql = \"select count(*) from Wydarzenie\";\r\n        ResultSet rs =DatabaseConnector.getResultSet(sql);\r\n        int liczba=0;\r\n        try {\r\n            rs.next();\r\n            liczba =  (rs.getInt(1));\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n        }\r\n        return liczba;\r\n    }\r\n\r\n    public static User getUser(int id){\r\n        User user = null;\r\n\r\n        return user;\r\n    }\r\n    public static CityEvent getWydarzenie(int id){\r\n        CityEvent cityEvent = null;\r\n\r\n\r\n\r\n        switch (cityEvent.cityEventType){\r\n            case dzienDziecka:\r\n\r\n                //DzienDziecka dzienDziecka =  new DzienDziecka(new Date(1),new Date(2),CityEventType.dzienDziecka,\"\",1);\r\n                //dzienDziecka.setLiczbaDzieci( Integer.parseInt(combineWydarzenieData(dzienDziecka.getDane())[1]));\r\n        }\r\n\r\n        return cityEvent;\r\n    }\r\n\r\n    public static void addWydarzenie(CityEvent cityEvent){\r\n\r\n        switch (cityEvent.cityEventType) {\r\n            case dzienDziecka:\r\n                DzienDziecka dzienDziecka = (DzienDziecka) cityEvent;\r\n                List<String> listOfDataAboutWydarzenie = new ArrayList();\r\n                listOfDataAboutWydarzenie.add(Integer.toString(dzienDziecka.getLiczbaDzieci()));\r\n                listOfDataAboutWydarzenie.add(Integer.toString(dzienDziecka.getMaxLiczbaMiejsc()));\r\n                listOfDataAboutWydarzenie.add(Integer.toString(dzienDziecka.getLiczbaWychowawcow()));\r\n                String dataAboutCityEvent = separateDataFromWydarzenie(listOfDataAboutWydarzenie);\r\n                Date date = new Date();\r\n                SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-mm-dd hh:mm:ss\");\r\n                String sql = (\"INSERT INTO WYDARZENIE (ID_WYDARZENIE,TYTUL,OPIS,DATA_WPLYWU,DATA_ROZPOCZECIA,DATA_ZAKONCZENIA,STATUS,TYP,DANE_U) VALUES (\"\r\n                        +cityEvent.getId()+\",'\"\r\n                        +cityEvent.getTytul()+\"','\"\r\n                        +cityEvent.getOpis()+\"','\"\r\n                        +sdf.format(date)+\"','\"\r\n                        +sdf.format(cityEvent.getStartDate())+\"','\"\r\n                        +sdf.format(cityEvent.getEndDate())+\"','\"\r\n                        +cityEvent.getStatusWydarzenia()+\"','\"\r\n                        +cityEvent.cityEventType+\"','\"\r\n                        +dataAboutCityEvent+\"')\");\r\n                DatabaseConnector.execute(sql);\r\n\r\n                break;\r\n        }\r\n    }\r\n\r\n    public static List<CityEvent> getWydarzenia(CityEventType cityEventType){\r\n        String sql = \"SELECT * FROM Wydarzenie\";\r\n        ResultSet rs = DatabaseConnector.getResultSet(sql);\r\n        List<CityEvent> listaWnioskow = new ArrayList<>();\r\n        SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-mm-dd hh:mm:ss\");\r\n        switch (cityEventType){\r\n            case dzienDziecka:\r\n               try {\r\n                    while (rs.next()) {\r\n                        ArrayList<String> daneU = combineWydarzenieData(rs.getString(\"DANE_U\"));\r\n                        listaWnioskow.add(new DzienDziecka(\r\n                                rs.getInt(\"ID_WYDARZENIE\"),\r\n                                (Date)sdf.parse(rs.getString(\"DATA_ROZPOCZECIA\")),\r\n                                (Date)sdf.parse(rs.getString(\"DATA_ZAKONCZENIA\")),\r\n                                rs.getString(\"TYTUL\"),\r\n                                rs.getString(\"OPIS\"),\r\n                                (Date)sdf.parse(rs.getString(\"DATA_WPLYWU\")),\r\n                                StatusWniosek.valueOf(rs.getString(\"STATUS\")),\r\n                                CityEventType.valueOf(rs.getString(\"TYP\")),\r\n                                Integer.parseInt(daneU.get(0)),\r\n                                Integer.parseInt(daneU.get(1)),\r\n                                Integer.parseInt(daneU.get(2))));\r\n                    }\r\n                } catch (SQLException e) {\r\n                    e.printStackTrace();\r\n                } catch (ParseException e) {\r\n                   e.printStackTrace();\r\n               }\r\n                break;\r\n        }\r\n        return listaWnioskow;\r\n    }\r\n\r\n    public static User getUserByLogin(String login) {\r\n       //addUsersToDatabase();\r\n        String sql = \"Select * From uzytkownik Where login = '\"+login+\"'\";\r\n        ResultSet rs = DatabaseConnector.getResultSet(sql);\r\n        User user = null;\r\n        try {\r\n            rs.next();\r\n            user =  new User(\r\n                    rs.getInt(\"ID_UZYTKOWNIK\"),\r\n                    rs.getString(\"imie\"),\r\n                    rs.getString(\"nazwisko\"),\r\n                    rs.getString(\"login\"),\r\n                    rs.getString(\"haslo\")/*,\r\n                    rs.getInt(\"ID_STANOWISKA\")*/\r\n            );\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n        }return user;\r\n    }\r\n\r\n    private static void addUsersToDatabase(){\r\n        DatabaseConnector.execute(\"insert into uzytkownik values(1,'Krzysztof','Skalik','sexikrzysiu69','qwe')\");\r\n        DatabaseConnector.execute(\"insert into uzytkownik values(2,'Kamil','Niekurzak','kamilLowcaWeronik','lubiewdupe123')\");\r\n    }\r\n    private static ArrayList<String> combineWydarzenieData(String data){\r\n        ArrayList<String> daneU = new ArrayList<>();\r\n        String[] temp = data.split(\"|\");\r\n\r\n        for(int i=0;i<temp.length;i++){\r\n            if(!temp[i].equals(\"|\"))\r\n                daneU.add(temp[i]);\r\n        }\r\n\r\n\r\n                                                                                              //TODO: skonczyc!\r\n        return daneU;\r\n    }\r\n\r\n    private static String separateDataFromWydarzenie(List<String> lista){\r\n        String data = \"\";\r\n        for(String e:lista)\r\n            data +=e+\"|\";\r\n\r\n        return data;\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/server/src/Database/DataManager.java	(revision 77da8ae373fc7e6afa1eb5d353978bdecfc76977)
++++ src/server/src/Database/DataManager.java	(date 1592916747898)
+@@ -77,7 +77,7 @@
+ 
+         } catch (SQLException e) {
+             e.printStackTrace();
+-        } catch (ParseException e) {
++        } catch (ParseException | NullPointerException e) {
+             e.printStackTrace();
+         }
+         return wniosek;
+@@ -113,6 +113,7 @@
+         String sql=("UPDATE WNIOSEK SET STATUS = '"+statusWniosek+"' WHERE ID_WNIOSEK = '"+id+"'");
+         DatabaseConnector.execute(sql);
+     }
++
+     public static void zmienStatusWydarzenia(int id,StatusWniosek statusWniosek)
+     {
+         String sql=("UPDATE Wydarzenie SET STATUS = '"+statusWniosek+"' WHERE ID_WYDARZENIE = '"+id+"'");
+Index: src/Graphics/AddWniosekView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Graphics;\r\n\r\nimport Core.Client.ServerOperation;\r\nimport Core.ClientManager;\r\nimport Core.StatusWniosek;\r\nimport Core.Wniosek;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.TextArea;\r\nimport javafx.scene.layout.HBox;\r\nimport javafx.scene.layout.VBox;\r\n\r\nimport java.text.SimpleDateFormat;\r\nimport java.util.Date;\r\n\r\npublic class AddWniosekView  extends HBox {\r\n    VBox mainVBox = new VBox();\r\n\r\n    Label tytulLabel;\r\n    Label trescLabel;\r\n    Label autorLabel;\r\n\r\n    TextArea tytulTextArea;\r\n    TextArea trescTextArea;\r\n    TextArea autorTextArea;\r\n\r\n\r\n    SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-mm-dd hh:mm:ss\");\r\n    UIManager uiManager;\r\n    Button wyslij;\r\n    Button cofnij;\r\n\r\n\r\n\r\n    public AddWniosekView(UIManager uiManager) {\r\n        this.uiManager = uiManager;\r\n        wyslij = new Button(\"Wyślij\");\r\n        tytulLabel = new Label(\"Wpisz tytuł:\");\r\n        trescLabel = new Label(\"Wpisz treść wniosku:\");\r\n        autorLabel = new Label(\"Wpisz autora wniosku:\");\r\n        tytulTextArea = new TextArea();\r\n        trescTextArea = new TextArea();\r\n        autorTextArea = new TextArea();\r\n        cofnij = new Button(\"Cofnij\");\r\n        addStructure();\r\n        setActionEvents();\r\n\r\n    }\r\n\r\n    public void addStructure(){\r\n        mainVBox.getChildren().add(tytulLabel);\r\n        mainVBox.getChildren().add(tytulTextArea);\r\n        mainVBox.getChildren().add(trescLabel);\r\n        mainVBox.getChildren().add(trescTextArea);\r\n        mainVBox.getChildren().add(autorLabel);\r\n        mainVBox.getChildren().add(autorTextArea);\r\n        mainVBox.getChildren().add(wyslij);\r\n        mainVBox.getChildren().add(cofnij);\r\n        this.getChildren().add(mainVBox);\r\n    }\r\n\r\n\r\n    private void setActionEvents(){\r\n\r\n        wyslij.setOnAction(event -> {\r\n            int liczba = (int)ClientManager.clientSender.sendToServer(ServerOperation.getLiczbaWnioskow,null);\r\n            Wniosek wniosek = new Wniosek(liczba+1,tytulTextArea.getText(),trescTextArea.getText(),new Date(),autorTextArea.getText(),new Date(),StatusWniosek.DO_ROZPATRZENIA,liczba+1,new Date());\r\n            ClientManager.clientSender.sendToServer(ServerOperation.addWniosek,wniosek);\r\n        });\r\n        cofnij.setOnAction(event -> {\r\n            uiManager.changeViewToGuestView();\r\n        });\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Graphics/AddWniosekView.java	(revision 77da8ae373fc7e6afa1eb5d353978bdecfc76977)
++++ src/Graphics/AddWniosekView.java	(date 1592828050195)
+@@ -64,9 +64,20 @@
+ 
+         wyslij.setOnAction(event -> {
+             int liczba = (int)ClientManager.clientSender.sendToServer(ServerOperation.getLiczbaWnioskow,null);
+-            Wniosek wniosek = new Wniosek(liczba+1,tytulTextArea.getText(),trescTextArea.getText(),new Date(),autorTextArea.getText(),new Date(),StatusWniosek.DO_ROZPATRZENIA,liczba+1,new Date());
++            Wniosek wniosek = new Wniosek(liczba+1,
++                    tytulTextArea.getText(),
++                    trescTextArea.getText(),
++                    new Date(),
++                    autorTextArea.getText(),
++                    new Date(),
++                    StatusWniosek.DO_ROZPATRZENIA,
++                    liczba+1,
++                    new Date()
++            );
++
+             ClientManager.clientSender.sendToServer(ServerOperation.addWniosek,wniosek);
+         });
++
+         cofnij.setOnAction(event -> {
+             uiManager.changeViewToGuestView();
+         });
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"e6275d2e-c291-435f-8672-15d194113dff\" name=\"Default Changelist\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Core/User.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Core/User.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Graphics/LoginView.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Graphics/LoginView.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/server/src/Database/DataManager.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/server/src/Database/DataManager.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/server/src/Database/DatabaseConnector.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/server/src/Database/DatabaseConnector.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1dNEiZiDjMxlyGDjuTaTxOuoIrC\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"aspect.path.notification.shown\" value=\"true\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\r\n    <property name=\"project.structure.last.edited\" value=\"Project\" />\r\n    <property name=\"project.structure.proportion\" value=\"0.15\" />\r\n    <property name=\"project.structure.side.proportion\" value=\"0.0\" />\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.UIManager\">\r\n    <configuration name=\"MainServer\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"server.src.MainServer\" />\r\n      <module name=\"projekt TO\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"server.src.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"UIManager\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Graphics.UIManager\" />\r\n      <module name=\"projekt TO\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"Graphics.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.UIManager\" />\r\n        <item itemvalue=\"Application.MainServer\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SvnConfiguration\">\r\n    <configuration />\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"e6275d2e-c291-435f-8672-15d194113dff\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1592257278894</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1592257278894</updated>\r\n      <workItem from=\"1592257280370\" duration=\"382000\" />\r\n      <workItem from=\"1592304614334\" duration=\"758000\" />\r\n      <workItem from=\"1592378758709\" duration=\"71000\" />\r\n      <workItem from=\"1592676693678\" duration=\"3368000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"2\" />\r\n  </component>\r\n  <component name=\"WindowStateProjectService\">\r\n    <state width=\"2517\" height=\"282\" key=\"GridCell.Tab.0.bottom\" timestamp=\"1592678873493\">\r\n      <screen x=\"0\" y=\"0\" width=\"2560\" height=\"1040\" />\r\n    </state>\r\n    <state width=\"2517\" height=\"282\" key=\"GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040\" timestamp=\"1592678873493\" />\r\n    <state width=\"2517\" height=\"282\" key=\"GridCell.Tab.0.center\" timestamp=\"1592678873493\">\r\n      <screen x=\"0\" y=\"0\" width=\"2560\" height=\"1040\" />\r\n    </state>\r\n    <state width=\"2517\" height=\"282\" key=\"GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040\" timestamp=\"1592678873493\" />\r\n    <state width=\"2517\" height=\"282\" key=\"GridCell.Tab.0.left\" timestamp=\"1592678873493\">\r\n      <screen x=\"0\" y=\"0\" width=\"2560\" height=\"1040\" />\r\n    </state>\r\n    <state width=\"2517\" height=\"282\" key=\"GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040\" timestamp=\"1592678873493\" />\r\n    <state width=\"2517\" height=\"282\" key=\"GridCell.Tab.0.right\" timestamp=\"1592678873493\">\r\n      <screen x=\"0\" y=\"0\" width=\"2560\" height=\"1040\" />\r\n    </state>\r\n    <state width=\"2517\" height=\"282\" key=\"GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040\" timestamp=\"1592678873493\" />\r\n    <state x=\"760\" y=\"94\" key=\"SettingsEditor\" timestamp=\"1592257430192\">\r\n      <screen x=\"0\" y=\"0\" width=\"2560\" height=\"1040\" />\r\n    </state>\r\n    <state x=\"760\" y=\"94\" key=\"SettingsEditor/0.0.2560.1040@0.0.2560.1040\" timestamp=\"1592257430192\" />\r\n    <state x=\"1089\" y=\"434\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2\" timestamp=\"1592676882653\">\r\n      <screen x=\"0\" y=\"0\" width=\"2560\" height=\"1040\" />\r\n    </state>\r\n    <state x=\"1089\" y=\"434\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1040@0.0.2560.1040\" timestamp=\"1592676882653\" />\r\n    <state x=\"987\" y=\"253\" width=\"585\" height=\"534\" key=\"find.popup\" timestamp=\"1592679133146\">\r\n      <screen x=\"0\" y=\"0\" width=\"2560\" height=\"1040\" />\r\n    </state>\r\n    <state x=\"987\" y=\"253\" width=\"585\" height=\"534\" key=\"find.popup/0.0.2560.1040@0.0.2560.1040\" timestamp=\"1592679133146\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/workspace.xml	(revision 77da8ae373fc7e6afa1eb5d353978bdecfc76977)
++++ .idea/workspace.xml	(date 1593113671981)
+@@ -1,10 +1,43 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="BranchesTreeState">
++    <expand>
++      <path>
++        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
++      </path>
++      <path>
++        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
++      </path>
++      <path>
++        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
++      </path>
++    </expand>
++    <select />
++  </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="e6275d2e-c291-435f-8672-15d194113dff" name="Default Changelist" comment="">
+-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Core/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/User.java" afterDir="false" />
++    <list default="true" id="14ee7059-b2bb-4fdf-8f7e-5ebf7e70ce4e" name="Default Changelist" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Wniosek.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt pip svn/Core/Wniosek.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/AddWniosekView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/AddWniosekView.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/LoginView.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/UIManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/UIManager.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/WyswietlNoweWnioskiView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt pip svn/Graphics/WyswietlNoweWnioskiView.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ConnectedClient$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ConnectedClient$1.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ConnectedClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/ConnectedClient.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/Database/DataManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/Database/DataManager$1.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/Database/DataManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projekt pip svn/server/src/Database/DataManager.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Core/Client/ClientSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Client/ClientSender.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Core/Wniosek.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Wniosek.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Graphics/AddWniosekView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/AddWniosekView.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/Graphics/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/LoginView.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Graphics/UIManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/UIManager.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Graphics/WyswietlNoweWnioskiView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/WyswietlNoweWnioskiView.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/server/src/ConnectedClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/src/ConnectedClient.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/server/src/Database/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/src/Database/DataManager.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/server/src/Database/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/src/Database/DatabaseConnector.java" afterDir="false" />
+     </list>
+@@ -17,6 +50,7 @@
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="ProjectId" id="1dNEiZiDjMxlyGDjuTaTxOuoIrC" />
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+@@ -30,6 +64,7 @@
+     <property name="project.structure.last.edited" value="Project" />
+     <property name="project.structure.proportion" value="0.15" />
+     <property name="project.structure.side.proportion" value="0.0" />
++    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+   </component>
+   <component name="RunManager" selected="Application.UIManager">
+     <configuration name="MainServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+@@ -58,6 +93,10 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
++    <list>
++      <item itemvalue="Application.MainServer" />
++      <item itemvalue="Application.UIManager" />
++    </list>
+     <recent_temporary>
+       <list>
+         <item itemvalue="Application.UIManager" />
+@@ -70,7 +109,7 @@
+   </component>
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+-      <changelist id="e6275d2e-c291-435f-8672-15d194113dff" name="Default Changelist" comment="" />
++      <changelist id="14ee7059-b2bb-4fdf-8f7e-5ebf7e70ce4e" name="Default Changelist" comment="" />
+       <created>1592257278894</created>
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+@@ -84,35 +123,96 @@
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="2" />
++  </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
++    <option name="oldMeFiltersMigrated" value="true" />
+   </component>
+   <component name="WindowStateProjectService">
+-    <state width="2517" height="282" key="GridCell.Tab.0.bottom" timestamp="1592678873493">
+-      <screen x="0" y="0" width="2560" height="1040" />
++    <state x="549" y="202" key="FileChooserDialogImpl" timestamp="1592852907085">
++      <screen x="0" y="30" width="1536" height="834" />
++    </state>
++    <state x="549" y="202" key="FileChooserDialogImpl/0.30.1536.834@0.30.1536.834" timestamp="1592852907085" />
++    <state width="1493" height="215" key="GridCell.Tab.0.bottom" timestamp="1593113515743">
++      <screen x="0" y="30" width="1536" height="834" />
+     </state>
+     <state width="2517" height="282" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1592678873493" />
+-    <state width="2517" height="282" key="GridCell.Tab.0.center" timestamp="1592678873493">
+-      <screen x="0" y="0" width="2560" height="1040" />
++    <state width="1493" height="215" key="GridCell.Tab.0.bottom/0.30.1536.834@0.30.1536.834" timestamp="1593113515743" />
++    <state width="1493" height="215" key="GridCell.Tab.0.center" timestamp="1593113515742">
++      <screen x="0" y="30" width="1536" height="834" />
+     </state>
+     <state width="2517" height="282" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1592678873493" />
+-    <state width="2517" height="282" key="GridCell.Tab.0.left" timestamp="1592678873493">
+-      <screen x="0" y="0" width="2560" height="1040" />
++    <state width="1493" height="215" key="GridCell.Tab.0.center/0.30.1536.834@0.30.1536.834" timestamp="1593113515742" />
++    <state width="1493" height="215" key="GridCell.Tab.0.left" timestamp="1593113515742">
++      <screen x="0" y="30" width="1536" height="834" />
+     </state>
+     <state width="2517" height="282" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1592678873493" />
+-    <state width="2517" height="282" key="GridCell.Tab.0.right" timestamp="1592678873493">
+-      <screen x="0" y="0" width="2560" height="1040" />
++    <state width="1493" height="215" key="GridCell.Tab.0.left/0.30.1536.834@0.30.1536.834" timestamp="1593113515742" />
++    <state width="1493" height="215" key="GridCell.Tab.0.right" timestamp="1593113515742">
++      <screen x="0" y="30" width="1536" height="834" />
+     </state>
+     <state width="2517" height="282" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1592678873493" />
+-    <state x="760" y="94" key="SettingsEditor" timestamp="1592257430192">
+-      <screen x="0" y="0" width="2560" height="1040" />
++    <state width="1493" height="215" key="GridCell.Tab.0.right/0.30.1536.834@0.30.1536.834" timestamp="1593113515742" />
++    <state width="1493" height="265" key="GridCell.Tab.1.bottom" timestamp="1592928251906">
++      <screen x="0" y="30" width="1536" height="834" />
++    </state>
++    <state width="1493" height="265" key="GridCell.Tab.1.bottom/0.30.1536.834@0.30.1536.834" timestamp="1592928251906" />
++    <state width="1493" height="265" key="GridCell.Tab.1.center" timestamp="1592928251906">
++      <screen x="0" y="30" width="1536" height="834" />
++    </state>
++    <state width="1493" height="265" key="GridCell.Tab.1.center/0.30.1536.834@0.30.1536.834" timestamp="1592928251906" />
++    <state width="1493" height="265" key="GridCell.Tab.1.left" timestamp="1592928251906">
++      <screen x="0" y="30" width="1536" height="834" />
++    </state>
++    <state width="1493" height="265" key="GridCell.Tab.1.left/0.30.1536.834@0.30.1536.834" timestamp="1592928251906" />
++    <state width="1493" height="265" key="GridCell.Tab.1.right" timestamp="1592928251906">
++      <screen x="0" y="30" width="1536" height="834" />
++    </state>
++    <state width="1493" height="265" key="GridCell.Tab.1.right/0.30.1536.834@0.30.1536.834" timestamp="1592928251906" />
++    <state x="456" y="105" key="SettingsEditor" timestamp="1592812336553">
++      <screen x="0" y="30" width="1536" height="834" />
+     </state>
+     <state x="760" y="94" key="SettingsEditor/0.0.2560.1040@0.0.2560.1040" timestamp="1592257430192" />
++    <state x="456" y="105" key="SettingsEditor/0.30.1536.834@0.30.1536.834" timestamp="1592812336553" />
++    <state x="93" y="123" width="1350" height="648" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1592923526918">
++      <screen x="0" y="30" width="1536" height="834" />
++    </state>
++    <state x="93" y="123" width="1350" height="648" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.30.1536.834@0.30.1536.834" timestamp="1592923526918" />
++    <state x="93" y="123" width="1350" height="648" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1592915516172">
++      <screen x="0" y="30" width="1536" height="834" />
++    </state>
++    <state x="93" y="123" width="1350" height="648" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.30.1536.834@0.30.1536.834" timestamp="1592915516172" />
+     <state x="1089" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592676882653">
+       <screen x="0" y="0" width="2560" height="1040" />
+     </state>
+     <state x="1089" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1040@0.0.2560.1040" timestamp="1592676882653" />
+-    <state x="987" y="253" width="585" height="534" key="find.popup" timestamp="1592679133146">
+-      <screen x="0" y="0" width="2560" height="1040" />
++    <state x="592" y="233" width="549" height="534" key="find.popup" timestamp="1593112272994">
++      <screen x="0" y="30" width="1536" height="834" />
+     </state>
+     <state x="987" y="253" width="585" height="534" key="find.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1592679133146" />
++    <state x="592" y="233" width="549" height="534" key="find.popup/0.30.1536.834@0.30.1536.834" timestamp="1593112272994" />
++    <state x="425" y="204" key="run.anything.popup" timestamp="1593112753068">
++      <screen x="0" y="30" width="1536" height="834" />
++    </state>
++    <state x="425" y="204" key="run.anything.popup/0.30.1536.834@0.30.1536.834" timestamp="1593112753068" />
++    <state x="425" y="102" width="672" height="676" key="search.everywhere.popup" timestamp="1593111661625">
++      <screen x="0" y="30" width="1536" height="834" />
++    </state>
++    <state x="425" y="102" width="672" height="676" key="search.everywhere.popup/0.30.1536.834@0.30.1536.834" timestamp="1593111661625" />
++  </component>
++  <component name="XDebuggerManager">
++    <watches-manager>
++      <configuration name="Application">
++        <watch expression="ServerOperation.zmienStatusWniosku" language="JAVA" />
++      </configuration>
++    </watches-manager>
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"VcsDirectoryMappings\">\r\n    <mapping directory=\"$PROJECT_DIR$\" vcs=\"Git\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(revision 77da8ae373fc7e6afa1eb5d353978bdecfc76977)
++++ .idea/vcs.xml	(date 1593099365784)
+@@ -2,5 +2,6 @@
+ <project version="4">
+   <component name="VcsDirectoryMappings">
+     <mapping directory="$PROJECT_DIR$" vcs="Git" />
++    <mapping directory="$PROJECT_DIR$/TO v1" vcs="Git" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: src/Core/Wniosek.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Core;\r\n\r\nimport java.io.Serializable;\r\nimport java.util.Date;\r\n\r\npublic class Wniosek implements Serializable {\r\n    int id;\r\n    String tytul;\r\n    String tresc;\r\n    Date dataWplywu;\r\n    String autor;\r\n    Date dataModyfikaci;\r\n    StatusWniosek statusWniosek;\r\n    int nrWniosku;\r\n    Date dataRozpoczeciaGlosowania;\r\n\r\n\r\n    public Date getDataRozpoczeciaGlosowania() {\r\n        return dataRozpoczeciaGlosowania;\r\n    }\r\n\r\n    public void setDataRozpoczeciaGlosowania(Date dataRozpoczeciaGlosowania) {\r\n        this.dataRozpoczeciaGlosowania = dataRozpoczeciaGlosowania;\r\n    }\r\n\r\n    public int getNrWniosku() {\r\n        return nrWniosku;\r\n    }\r\n\r\n    public void setNrWniosku(int nrWniosku) {\r\n        this.nrWniosku = nrWniosku;\r\n    }\r\n\r\n    public Wniosek(int id, String tytul, String tresc, Date dataWplywu, String autor, Date dataModyfikaci, StatusWniosek statusWniosek, int nrWniosku, Date dataRozpoczeciaGlosowania) {\r\n        this.id = id;\r\n        this.tytul = tytul;\r\n        this.tresc = tresc;\r\n        this.dataWplywu = dataWplywu;\r\n        this.autor = autor;\r\n        this.dataModyfikaci = dataModyfikaci;\r\n        this.statusWniosek = statusWniosek;\r\n        this.nrWniosku = nrWniosku;\r\n        this.dataRozpoczeciaGlosowania = dataRozpoczeciaGlosowania;\r\n    }\r\n\r\n    public int getId() {\r\n\r\n        return id;\r\n    }\r\n\r\n    public void setId(int id) {\r\n        this.id = id;\r\n    }\r\n\r\n    public String getTytul() {\r\n        return tytul;\r\n    }\r\n\r\n    public void setTytul(String tytul) {\r\n        this.tytul = tytul;\r\n    }\r\n\r\n    public String getTresc() {\r\n        return tresc;\r\n    }\r\n\r\n    public void setTresc(String tresc) {\r\n        this.tresc = tresc;\r\n    }\r\n\r\n    public Date getDataWplywu() {\r\n        return dataWplywu;\r\n    }\r\n\r\n    public void setDataWplywu(Date dataWplywu) {\r\n        this.dataWplywu = dataWplywu;\r\n    }\r\n\r\n    public String getAutor() {\r\n        return autor;\r\n    }\r\n\r\n    public void setAutor(String autor) {\r\n        this.autor = autor;\r\n    }\r\n\r\n    public Date getDataModyfikaci() {\r\n        return dataModyfikaci;\r\n    }\r\n\r\n    public void setDataModyfikaci(Date dataModyfikaci) {\r\n        this.dataModyfikaci = dataModyfikaci;\r\n    }\r\n\r\n    public StatusWniosek getStatusWniosek() {\r\n        return statusWniosek;\r\n    }\r\n\r\n    public void setStatusWniosek(StatusWniosek statusWniosek) {\r\n        this.statusWniosek = statusWniosek;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Core/Wniosek.java	(revision 77da8ae373fc7e6afa1eb5d353978bdecfc76977)
++++ src/Core/Wniosek.java	(date 1592922952289)
+@@ -43,6 +43,9 @@
+         this.dataRozpoczeciaGlosowania = dataRozpoczeciaGlosowania;
+     }
+ 
++    public Wniosek() {
++    }
++
+     public int getId() {
+ 
+         return id;

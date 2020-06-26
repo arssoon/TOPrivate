@@ -6,6 +6,7 @@ import Core.User;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -14,7 +15,7 @@ public class LoginView  extends HBox {
     UIManager uiManager;
 
     TextArea login = new TextArea();
-    TextArea password = new TextArea();
+    PasswordField password = new PasswordField();
     Label labelLogin;
     Label labelPassword;
     Button buttonContinueAsGuest;
@@ -57,7 +58,7 @@ public class LoginView  extends HBox {
         hBoxWithButtons.getChildren().add(buttonContinueAsGuest);
         mainVbox.getChildren().add(hBoxWithButtons);
 
-        login.setText("krzysiek");
+        login.setText("dobrzezejestdobrze");
         password.setText("qwe");
 
         this.getChildren().add(mainVbox);

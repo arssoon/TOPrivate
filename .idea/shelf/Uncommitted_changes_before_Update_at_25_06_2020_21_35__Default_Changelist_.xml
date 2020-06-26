@@ -1,0 +1,49 @@
+<changelist name="Uncommitted_changes_before_Update_at_25_06_2020_21_35_[Default_Changelist]" date="1593113731873" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_06_2020_21_35_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 25.06.2020 21:35 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Projekt pip svn/Graphics/WyswietlNoweWnioskiView.class" />
+    <option name="AFTER_PATH" value="out/production/Projekt pip svn/Graphics/WyswietlNoweWnioskiView.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_06_2020_21_35_[Default_Changelist]/WyswietlNoweWnioskiView.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Projekt pip svn/server/src/Database/DataManager.class" />
+    <option name="AFTER_PATH" value="out/production/Projekt pip svn/server/src/Database/DataManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_06_2020_21_35_[Default_Changelist]/DataManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Projekt pip svn/server/src/ConnectedClient$1.class" />
+    <option name="AFTER_PATH" value="out/production/Projekt pip svn/server/src/ConnectedClient$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_06_2020_21_35_[Default_Changelist]/ConnectedClient$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Projekt pip svn/Graphics/LoginView.class" />
+    <option name="AFTER_PATH" value="out/production/Projekt pip svn/Graphics/LoginView.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_06_2020_21_35_[Default_Changelist]/LoginView.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Projekt pip svn/server/src/ConnectedClient.class" />
+    <option name="AFTER_PATH" value="out/production/Projekt pip svn/server/src/ConnectedClient.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_06_2020_21_35_[Default_Changelist]/ConnectedClient.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Projekt pip svn/Core/Wniosek.class" />
+    <option name="AFTER_PATH" value="out/production/Projekt pip svn/Core/Wniosek.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_06_2020_21_35_[Default_Changelist]/Wniosek.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Projekt pip svn/server/src/Database/DataManager$1.class" />
+    <option name="AFTER_PATH" value="out/production/Projekt pip svn/server/src/Database/DataManager$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_06_2020_21_35_[Default_Changelist]/DataManager$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Projekt pip svn/Graphics/UIManager.class" />
+    <option name="AFTER_PATH" value="out/production/Projekt pip svn/Graphics/UIManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_06_2020_21_35_[Default_Changelist]/UIManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Projekt pip svn/Graphics/AddWniosekView.class" />
+    <option name="AFTER_PATH" value="out/production/Projekt pip svn/Graphics/AddWniosekView.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_06_2020_21_35_[Default_Changelist]/AddWniosekView.class" />
+  </binary>
+</changelist>

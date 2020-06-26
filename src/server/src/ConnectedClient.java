@@ -6,6 +6,7 @@ import Core.Events.CityEventType;
 import Core.StatusWniosek;
 import Core.User;
 import Core.Wniosek;
+import com.sun.corba.se.spi.activation.ServerManager;
 import server.src.Database.DataManager;
 import server.src.Database.DatabaseConnector;
 
@@ -57,10 +58,10 @@ public class ConnectedClient extends Thread {
     }
 
     private synchronized void executeOperation(ServerOperation serverOperation,Object object){
-
+        Wniosek wniosek = null;
         switch (serverOperation){
             case addWniosek:
-                Wniosek wniosek = (Wniosek) object;
+                wniosek = (Wniosek) object;
                 DataManager.addWniosek(wniosek);
                 try {
                     objectOutputStream.writeObject("nic");
@@ -78,7 +79,7 @@ public class ConnectedClient extends Thread {
 
                 break;
             case getListaWnioskowByStatus:
-                System.out.println("get LISTA WNIOSKOW BY STATUS");
+//                System.out.println("get LISTA WNIOSKOW BY STATUS");
                 List<Wniosek> lista = DataManager.getListaWnioskowByStatus((StatusWniosek) object);
                 try {
                     objectOutputStream.writeObject(lista);
@@ -87,7 +88,6 @@ public class ConnectedClient extends Thread {
                 }
                 break;
             case getLiczbaWnioskow:
-                System.out.println("asfd");
                 int liczba  = DataManager.getLiczbaWnioskow();
                 try {
                     objectOutputStream.writeObject(liczba);
@@ -97,7 +97,6 @@ public class ConnectedClient extends Thread {
                 break;
             case addWydarzenie:
                 CityEvent cityEvent = (CityEvent) object;
-                System.out.println("asfd");
                 DataManager.addWydarzenie(cityEvent);
                 try {
                     objectOutputStream.writeObject("nic");
@@ -106,7 +105,6 @@ public class ConnectedClient extends Thread {
                 }
                 break;
             case getLiczbaWydarzen:
-                System.out.println("asfd");
                 int liczbaw  = DataManager.getLiczbaWydarzen();
                 try {
                     objectOutputStream.writeObject(liczbaw);
@@ -130,8 +128,31 @@ public class ConnectedClient extends Thread {
                     e.printStackTrace();
                 }
                 break;
+            case zmienStatusWnioskuZatwierdzone:
+                wniosek = (Wniosek) object;
+
+                int liczba1 = DataManager.getLiczbaWnioskow();
+                System.out.println("wniosek : " +liczba1 + "\n");
+                DataManager.zmienStatusWnioskuZatwierdzone(wniosek.getNrWniosku(), StatusWniosek.ZATWIERDZONE);
+                DataManager.utworzGlosowanieWniosek(wniosek.getNrWniosku());
+                try {
+                    objectOutputStream.writeObject("nic");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case zmienStatusWnioskuOdrzucone:
+                wniosek = (Wniosek) object;
+
+                System.out.println("wniosek : " + wniosek.getNrWniosku() + "\n");
+                DataManager.zmienStatusWnioskuOdrzucone(wniosek.getNrWniosku(), StatusWniosek.ODRZUCONE);
+
+                try {
+                    objectOutputStream.writeObject("nic");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
-
-
     }
 }

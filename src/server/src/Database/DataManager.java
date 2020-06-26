@@ -34,7 +34,7 @@ public class DataManager {
     {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String sql=("INSERT INTO Glosowanie_Wydarzenie(id_glosowanie_wydarzenie,status,data_rozpoczecia,id_wydarzenie) VALUES("
+        String sql=("INSERT INTO GLOSOWANIE_USTAWA(id_glosowanie_ustawa,status,data_rozpoczecia,id_wniosek) VALUES("
                 +(getLiczbaWnioskow()+1) + ",'"
                 +StatusUstawy.ROZPOCZETA+ "','"
                 +sdf.format(date)+ "','"
@@ -108,7 +108,12 @@ public class DataManager {
         }
         return listaWnioskow;
     }
-    public static void zmienStatusWniosku(int id,StatusWniosek statusWniosek)
+    public static void zmienStatusWnioskuZatwierdzone(int id,StatusWniosek statusWniosek)
+    {
+        String sql=("UPDATE WNIOSEK SET STATUS = '"+statusWniosek+"' WHERE ID_WNIOSEK = '"+id+"'");
+        DatabaseConnector.execute(sql);
+    }
+    public static void zmienStatusWnioskuOdrzucone(int id,StatusWniosek statusWniosek)
     {
         String sql=("UPDATE WNIOSEK SET STATUS = '"+statusWniosek+"' WHERE ID_WNIOSEK = '"+id+"'");
         DatabaseConnector.execute(sql);
